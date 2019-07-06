@@ -55,6 +55,7 @@
 
             mounted(){
                 this.getComments();
+                this.listen();
             },
 
             methods : {
@@ -80,7 +81,15 @@
                         .catch(error => {
                             console.log(error);
                         })
-                }
+                },
+
+                listen() {
+                    // Echo.channel(`post.${this.post.id}`)
+                    Echo.private(`post.${this.post.id}`)
+                        .listen('NewComment', comment => {
+                            this.comments.unshift(comment);
+                        });
+                },
             },
         });
     </script>

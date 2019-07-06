@@ -14,3 +14,9 @@
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('post.{id}', function ($user, $id) {
+    //for posts author only
+    return $user->id == \App\Post::find($id)->user_id ;
+//return true; //for user authorized
+});
